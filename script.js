@@ -5,7 +5,7 @@ $("#currentDay").text(time);
 // Begin a function using jQuery
 $(document).ready(function(){
 
-})
+
 
 // listen for saveBtn clicks
 $(".saveBtn").on("click", function(){
@@ -13,7 +13,7 @@ $(".saveBtn").on("click", function(){
     
   var value = $(this).siblings("information").val();
   var time = $(this).parent().attr("id");
-  localStorage.setItem(time, value)
+  localStorage.setItem(time, value);
 
 })
 
@@ -41,7 +41,7 @@ $(".saveBtn").on("click", function(){
 // }
 // //call funtion
 // colorUpdater();
-var checkTime = function () {
+ function checkTime() {
    var hour = $(".hour");
    console.log(hour);
   var time = moment(hour, "LT");
@@ -52,22 +52,33 @@ var checkTime = function () {
   // for (i = 0; i < hour.length; i++) { 
   //  console.log(hour[i].sibling('textarea')); 
   // }
-hour.each(function(index){
-  console.log( index + ": " + $( this ).text() )
-  var time = $( this ).text().trim()
-  var textArea = $( this ).siblings("textArea");
-  textArea.removeClass(".present .past .future");
-  if (moment().isAfter(time)) {
-    textArea.addClass("past");
-} else if (moment().isBefore(time)) {
-    textArea.addClass("future");
-} else {
-    textArea.addClass("present");
-}
-moment.updateLocale('en', {
-  /**/
-});
-})
+$('.time-block').each(function(){
+  
+  // var time = $( this ).text().trim()
+  var textArea = parseInt($( this ).attr("id"));
+  // textArea.removeClass(".present .past .future");
+  if (time > textArea) {
+    $(this).addClass("past");
+
+  } else if (time === textArea) {
+    $(this).removeClass("past");
+    $(this).addClass("present");
+  } else {
+    $(this).removeClass("past");
+    $(this).removeClass("present");
+    $(this).addClass("future");
+  }
+//   if (moment().isAfter(time)) {
+//     textArea.addClass("past");
+// } else if (moment().isBefore(time)) {
+//     textArea.addClass("future");
+// } else {
+//     textArea.addClass("present");
+// }
+// moment.updateLocale('en', {
+//   /**/
+// });
+ })
 
 
   //remove any old classes from element
@@ -75,7 +86,7 @@ moment.updateLocale('en', {
 
   // apply new class if task is near/over due date
  
-}
+
 
 checkTime();
 
@@ -97,3 +108,4 @@ $("#hour-eleven .information").val(localStorage.getItem("#hour-eleven"));
 $("#hour-twelve .information").val(localStorage.getItem("#hour-twelve"));
 
 $("#currentDay").text(moment().format("MMM Do YYYY"));
+})
